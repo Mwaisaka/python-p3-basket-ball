@@ -1,3 +1,4 @@
+
 def game_dict():
     return {
         "home": {
@@ -182,3 +183,124 @@ def game_dict():
             ]
         }
     }
+
+def num_points_per_game(player_name):
+    game_data = game_dict()
+    
+    for team in game_data.values():
+        for player in team["players"]:
+            if player["name"] == player_name:
+                return player["points_per_game"]
+    return None
+
+def player_age(player_name):
+    game_data = game_dict()
+    for team in game_data.values():
+        for player in team["players"]:
+            if player["name"] == player_name:
+                return player["age"]    
+    return None
+
+def team_colors(team_name):
+    game_data = game_dict()
+    for team in game_data.values():
+        if team["team_name"] == team_name:
+            return team["colors"]
+    return None
+
+def team_names():
+    game_data = game_dict()
+    team_names_list = []
+    
+    for team in game_data.values():
+        team_names_list.append(team["team_name"]) 
+    return team_names_list
+
+def player_numbers(team_name):
+    game_data = game_dict()
+    team_jersey_list = []
+    for team in game_data.values():
+        if team["team_name"] == team_name:
+            for player in team["players"]:
+                team_jersey_list.append(player["number"])
+    return team_jersey_list
+
+def player_stats(player_name):
+    game_data = game_dict()
+    for team in game_data.values():
+        for player in team["players"]:
+            if player["name"] == player_name:
+                return player  
+    return None
+
+def average_rebounds_by_shoe_brand():
+    game_data = game_dict()
+    
+    rebounds_by_brand={}
+    
+    # The below code iterates through teams and players
+    for team in game_data.values():
+        for player in team["players"]:
+            shoe_brand=player["shoe_brand"]
+            player_rebounds=player["rebounds_per_game"]
+            
+            # The below code updates the dictionary for the current shoe brand
+            if shoe_brand not in rebounds_by_brand:
+                rebounds_by_brand[shoe_brand]={"total_rebounds":0, "player_count":0}
+           
+            rebounds_by_brand[shoe_brand]["total_rebounds"]+=player_rebounds
+            rebounds_by_brand[shoe_brand]["player_count"]+=1
+            
+    # The below code calculates and prints the average rebounds for each shoe brand       
+    for brand, stats in rebounds_by_brand.items():
+        average_rebounds=round(stats['total_rebounds']/stats['player_count'],2)
+        print(f'{brand}:  {average_rebounds:.2f}')
+        
+def player_with_most_career_points():
+    
+    game_data=game_dict()
+    
+    most_points_player=None
+    most_points=0
+    
+    for team in game_data.values():
+        for player in team["players"]:
+            career_points=player["career_points"]
+            
+            if career_points>most_points:
+                most_points=career_points
+                most_points_player=player
+    return most_points_player
+
+def check_duplicate_jersey_numbers():
+    
+    game_data = game_dict()
+    
+    set_of_duplicate_jersey_numbers=set()
+    
+    for team in game_data.values():
+        for player in team["players"]:
+            jersey_number=player["number"]
+            
+            if jersey_number in set_of_duplicate_jersey_numbers:
+                return True
+            else:
+                set_of_duplicate_jersey_numbers.add(jersey_number)
+                
+    return False
+
+def player_with_the_longest_name():
+    
+    game_data = game_dict()
+    
+    longest_name_player=None
+    lenght_of_longest_name=0
+    
+    for team in game_data.values():
+        for player in team["players"]:
+            player_name=player["name"]
+            
+            if len(player_name)>lenght_of_longest_name:
+                lenght_of_longest_name=len(player_name)
+                longest_name_player=player         
+    return longest_name_player
